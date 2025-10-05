@@ -1,0 +1,18 @@
+int main(){
+    int password;
+
+    puts("***********************************");
+    puts("* \t     -Level00 -\t\t  *");
+    puts("***********************************");
+    printf("Password:");
+    scanf("%d", &password);
+    if (password == 0x149c // 5276 in decimal
+    ){
+    {
+        puts("\nAuthenticated!");
+        system("/bin/sh");
+        return 0;
+    }
+    puts("\nInvalid Password!");
+    return 1;
+}

@@ -1,0 +1,11 @@
+int main(){
+    buffer[112];
+    memset(buffer,96);
+    buffer2[48];
+    memset(buffer2,40);
+    buffer3[112];
+    memset(buffer3,96);
+
+
+
+}

@@ -1,0 +1,52 @@
+# Walkthrough — level00
+
+## Goal
+
+Obtain a shell with `level01` privileges and read the flag at `/home/users/level01/.pass`.
+
+---
+
+## Key lines (only the essentials)
+
+These are the *single lines* from the program that matter for the exploit:
+
+```c
+scanf("%d", &password);
+if (password == 0x149c)    /* 0x149c == 5276 (decimal) */
+    system("/bin/sh");
+```
+
+---
+
+## What they mean (plain explanation)
+
+* `scanf("%d", &password);` — the program reads one integer from your input and stores it in `password`.
+* `if (password == 0x149c)` — the program compares the integer you provided to a hardcoded value (`0x149c`, which is `5276` in decimal).
+* `system("/bin/sh");` — if the comparison succeeds the program runs a shell. Because the binary is setuid/setgid to `level01`, that shell runs with `level01`’s privileges.
+
+---
+
+## Steps to get the shell and the flag
+
+Interactive:
+
+```bash
+./level00
+# when prompted "Password:" type: 5276
+```
+
+Non-interactive:
+
+```bash
+echo 5276 | ./level00
+# or
+printf "5276\n" | ./level00
+```
+
+Once you have the shell:
+
+```bash
+whoami        # -> level01
+cat /home/users/level01/.pass
+# uSq2ehEGT6c9S24zbshexZQBXUGrncxn5sD5QfGL
+```
