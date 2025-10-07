@@ -1,0 +1,96 @@
+int main(){
+    t = time(null);
+    srand(t);
+    puts("***********************************");
+    puts("*\t\tlevel03\t\t**");
+    puts("***********************************");
+
+    printf("Password:");
+    scanf("%d",&nb);
+    test(nb, 0x1337d00d)// 322424845
+    return 0;
+}
+
+int test(int a1, int a2)
+{
+  int result; // eax
+  char v3; // al
+
+  switch ( a2 - a1 )
+  {
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
+    case 6:
+    case 7:
+    case 8:
+    case 9:
+    case 16:
+    case 17:
+    case 18:
+    case 19:
+    case 20:
+    case 21:
+      result = decrypt(a2 - a1);
+      break;
+    default:
+      v3 = rand();
+      result = decrypt(v3);
+      break;
+  }
+  return result;
+}
+
+int decrypt(char a1)
+{
+  int i; // [esp+20h] [ebp-28h]
+  int len; // [esp+24h] [ebp-24h]
+  char buffer ; // [esp+2Bh] [ebp-1Dh] BYREF
+
+  buffer = "Q}|u`sfg~sf{}|a3"
+  len = strlen(buffer);
+  for ( i = 0; i < len; ++i )
+    buffer[i] ^= a1;
+  if (!strcmp(buffer, "Congratulations!") )
+    return system("/bin/sh");
+  else
+    return puts("\nInvalid Password");
+}
+
+
+void decrypt(unsigned char key) {
+    unsigned char data[] = {
+        0x51, 0x7d, 0x7c, 0x75, // 0x757c7d51 little endian
+        0x60, 0x73, 0x66, 0x67, // 0x67667360
+        0x7e, 0x73, 0x66, 0x7b, // 0x7b66737e
+        0x7d, 0x7c, 0x61, 0x33, // 0x33617c7d
+        0x00                    // null terminator
+    };
+
+    int len = strlen((char*)data);
+    for (int i = 0; i < len; i++) {
+        data[i] ^= key;
+    }
+
+    // Compare decrypted data with the string at 0x80489c3 (length 0x11 = 17)
+    // The string at 0x80489c3 is unknown from the assembly, so we assume it is:
+    // "\x??" (unknown), but since the code compares and then calls system or puts,
+    // we simulate with a placeholder string.
+    const char *target = "\x??"; // Placeholder, unknown from given code
+
+    // Since we don't know the actual string at 0x80489c3, we simulate the logic:
+    // If decrypted data matches target, call system("/bin/sh")
+    // else print some message.
+
+    // For demonstration, let's assume target is "expected_string" (length 17)
+    // Replace with actual string if known.
+    const char expected_string[18] = "expected_string!"; // 17 chars + null
+
+    if (memcmp(data, expected_string, 17) == 0) {
+        system("/bin/sh");
+    } else {
+        puts("Decryption failed");
+    }
+}

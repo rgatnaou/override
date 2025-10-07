@@ -42,9 +42,8 @@ int main(){
     puts("Enter Password: ");
     fget(buffer,100,stdin)
     cmp2 = verify_user_pass(buffer);
-    if (cmp2 != 0){
+    // if (cmp2 != 0){
         puts("nope, incorrect password...\n");
         return 1;
-    }
     return 0;
 }
